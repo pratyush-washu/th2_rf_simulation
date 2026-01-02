@@ -30,7 +30,7 @@ h.load_file('stdrun.hoc')
 h.load_file('stdlib.hoc')
 h.load_file('import3d.hoc')
 
-from base_functions import load_swc, distribute_synapses_uniform, grid_synapses_pruned
+from base_functions import distribute_synapses_uniform_perturbed, load_swc, grid_synapses_pruned
 
 # =============================================================================
 # CONFIGURATION - Modify these parameters as needed
@@ -92,7 +92,7 @@ def main():
     
     # Distribute synapses
     print(f"\n[2/4] Distributing synapses (density = {SYNAPSE_DENSITY} syn/μm)")
-    secs_off, synapses_off, syn_x_off, syn_y_off = distribute_synapses_uniform(
+    secs_off, synapses_off, syn_x_off, syn_y_off = distribute_synapses_uniform_perturbed(
         cell, density=SYNAPSE_DENSITY
     )
     

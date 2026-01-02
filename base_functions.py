@@ -174,55 +174,70 @@ def xyz_at(sec, v):
     return x[j-1] + f * (x[j] - x[j-1]), y[j-1] + f * (y[j] - y[j-1])
 
 
-def distribute_synapses_uniform(cell, density=0.06):
+def distribute_synapses_uniform_perturbed(cell, density=0.06, noise_scale=0.5, seed=None):
     """
-    Place synapses uniformly along each section.
-    
-    The number of synapses per section is ceil(section_length * density).
-    Synapses are evenly spaced along each section.
-    
+    Like distribute_synapses_uniform but add a small random perturbation to each
+    normalized position along a section.
+
     Parameters
     ----------
     cell : Cell
-        Cell object with sections
+        Cell object with .all sections.
     density : float
-        Synapse density (synapses per μm)
-        
+        Synapse density (same meaning as distribute_synapses_uniform).
+    noise_scale : float in [0, 1]
+        Fraction of the allowed maximum perturbation. The allowed maximum is
+        half the distance between neighboring (evenly spaced) positions, so
+        noise_scale=1.0 permits perturbations up to that half-distance.
+        Typical values: 0.0 (no noise) .. 1.0 (max allowed).
+    seed : int or None
+        Optional RNG seed for reproducibility.
+
     Returns
     -------
-    secs : list
-        List of Section objects
-    synapses : list of lists
-        Normalized positions [0-1] for each section
-    syn_x, syn_y : list of lists
-        X, Y coordinates (μm) for each synapse
+    secs, synapses, syn_x, syn_y
+        Same format as distribute_synapses_uniform. synapses contain the
+        perturbed normalized positions.
     """
-    secs = []
+    rng = np.random.default_rng(seed)
+    secs     = []
     synapses = []
-    syn_x = []
-    syn_y = []
-    
+    syn_x    = []
+    syn_y    = []
+
     for sec in cell.all:
         lam = sec.L * density
         n_syn = int(np.ceil(lam))
         sec_pos, sec_x, sec_y = [], [], []
-        
         if n_syn > 0:
-            # Evenly spaced positions along section
-            vals = np.linspace(0, 1, n_syn + 2)[1:-1]
+            # base even spacing (same as original)
+            vals = np.linspace(0, 1, n_syn + 2)[1:-1]          # even spacing
+            # spacing between neighbors in normalized coords
+            spacing = 1.0 / (n_syn + 1)
+            # maximum perturbation allowed to keep points from crossing neighbors:
+            max_perturb = 0.5 * spacing
+            # scale by user parameter
+            max_perturb *= float(np.clip(noise_scale, 0.0, 1.0))
+            if max_perturb > 0:
+                # draw independent normal perturbations, then clip to [-max_perturb, max_perturb]
+                # scale chosen so most draws fall well within the bound; clipping guarantees the hard limit.
+                scale = max_perturb * 0.5
+                perturb = rng.standard_normal(size=vals.shape) * scale
+                perturb = np.clip(perturb, -max_perturb, max_perturb)
+                vals = vals + perturb
+                vals = np.clip(vals, 1e-12, 1.0 - 1e-12)
+
             for v in vals:
-                sec_pos.append(v)
+                sec_pos.append(float(v))
                 x, y = xyz_at(sec, v)
-                sec_x.append(x)
-                sec_y.append(y)
-                
+                sec_x.append(x); sec_y.append(y)
+
         secs.append(sec)
         synapses.append(sec_pos)
         syn_x.append(sec_x)
         syn_y.append(sec_y)
-        
-    return secs, synapses, syn_x, syn_y
 
+    return secs, synapses, syn_x, syn_y
 
 def grid_synapses_pruned(syn_x_off, syn_y_off, secs_off, grid_size=50, region_size=100):
     """
