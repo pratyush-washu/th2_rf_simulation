@@ -51,3 +51,4 @@ Parameters were tuned via grid search to match physiological length constants ($
 * NumPy, SciPy
 * scikit-image
 * Matplotlib
+* Custom $Na_V$ channel mechanism in NEURON (compile `NaV_pr.mod` file in `mechanisms/`)
