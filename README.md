@@ -42,7 +42,7 @@ Parameters were tuned via grid search to match physiological length constants ($
 | **$E_{leak}$** | -55 mV | Leak reversal potential |
 | **$E_{Na}$** | 50 mV | Sodium reversal potential |
 | **$\lambda$** | 475 µm | Effective electrotonic length constant |
-| **Synapse Density** | 0.064 syn/µm | Excitatory input density |
+| **Synapse Density** | 0.064 syn/µm | Excitatory OFF bipolar input density |
 
 ## Requirements
 

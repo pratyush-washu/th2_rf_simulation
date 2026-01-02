@@ -11,7 +11,7 @@ the simulation script (02_run_simulation.py).
 Usage:
     python 01_generate_data_files.py
 
-Author: [Your Name]
+Author: Pratyush Ramakrishna
 Date: 2025
 """
 

@@ -15,7 +15,7 @@ Usage:
 Output:
     - Voltage response files for each grid position in output/ folder
 
-Author: [Your Name]
+Author: Pratyush Ramakrishna
 Date: 2025
 """
 

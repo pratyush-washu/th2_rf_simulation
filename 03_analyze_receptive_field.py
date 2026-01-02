@@ -17,7 +17,7 @@ Prerequisites:
 Usage:
     python 03_analyze_receptive_field.py
 
-Author: [Your Name]
+Author: Pratyush Ramakrishna
 Date: 2025
 """
 

@@ -8,7 +8,7 @@ This module contains functions for:
 - Running NEURON simulations with Nav channels
 - Extracting voltage responses from simulations
 
-Author: [Your Name]
+Author: Pratyush Ramakrishna
 Date: 2025
 """
 
