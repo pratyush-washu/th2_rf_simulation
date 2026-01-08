@@ -389,7 +389,7 @@ def run_simulation_square(swc_file, g_pas, ppp, we, syn_masks_stim_off,
     # Insert mechanisms into every section
     for sec in cell1.all:
         sec.insert('pas')
-        sec.Ra = 0.1
+        sec.Ra = 60
         sec.g_pas = g_pas
         sec.e_pas = -55.0
         sec.cm = 1
@@ -448,7 +448,7 @@ def run_simulation_square(swc_file, g_pas, ppp, we, syn_masks_stim_off,
     # Run simulation
     h.dt = 0.01
     h.finitialize(-55)
-    h.continuerun(3)
+    h.continuerun(5)
 
     return volt_list
 

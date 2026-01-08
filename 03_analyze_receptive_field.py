@@ -43,14 +43,14 @@ from scipy.spatial.distance import cdist
 CELL_ID = 11
 SWC_FILENAME = f'cell_{CELL_ID}_updated_soma.swc'
 
-# Model parameters (for documentation in output)
-G_PAS = 0.36
-NAV_DENSITY = 0.16
-WEIGHT = 0.27
-SIMULATION_INDEX = 1
+# Model parameters (from your optimization)
+G_PAS = 0.0012        # Passive leak conductance (S/cm²)
+NAV_DENSITY =  0.0019  # Sodium channel density (S/cm²)
+WEIGHT = 0.0003 # Synaptic weight scaling factor
+SIMULATION_INDEX = 1  # Index for output file naming
 
 # Analysis parameters
-PROXIMAL_THRESHOLD = 80  # μm from soma for proximal/distal classification
+PROXIMAL_THRESHOLD = 76.1  # μm from soma for proximal/distal classification
 RF_THRESHOLD_LOW = 25    # % of max for RF boundary
 RF_THRESHOLD_HIGH = 98   # % of max for RF peak
 BRIDGE_THICKNESS = 3     # pixels for connecting RF components
@@ -266,7 +266,7 @@ def main():
     print(f"      ROI count: {len(roi_cent)}")
     
     # Normalize response matrix
-    resp_dev_matrix = resp_matrix + 55  # Shift from resting potential
+    resp_dev_matrix = resp_matrix + np.abs(np.nanmin(resp_matrix))  # Shift from resting potential
     max_v = np.nanmax(resp_dev_matrix[:])
     
     multple_max = np.nanmax(np.nanmax(resp_dev_matrix, axis=1), axis=0)
@@ -387,18 +387,18 @@ def main():
     print(f"      Distal RF size (median):   {dist_size_median:.0f} μm")
     print(f"      Proximal COM (median):     {prox_com_median:.0f} μm")
     print(f"      Distal COM (median):       {dist_com_median:.0f} μm")
-    print(f"      Max voltage deflection:    {max_v - 55:.1f} mV")
+    print(f"      Max voltage deflection:    {max_v} mV")
     
     # Generate plots
     print(f"\n[6/6] Generating figures...")
     
     # Plot 1: COM distance
     fig, ax = plt.subplots(figsize=(10, 8))
-    hb = plot_hexbin(com_image.T, vmin=0, vmax=300, title='COM Distance', ax=ax)
+    hb = plot_hexbin(com_image.T, vmin=0, vmax=200, title='COM Distance', ax=ax)
     plt.colorbar(hb, ax=ax, label='COM Distance (μm)')
     plt.title(f'Receptive Field Center of Mass - Cell {CELL_ID}')
     plt.text(0.5, 0.01, 
-             f'Proximal COM: {prox_com_median:.0f} μm, Distal COM: {dist_com_median:.0f} μm, Max ΔV: {max_v-55:.0f} mV',
+             f'Proximal COM: {prox_com_median:.0f} μm, Distal COM: {dist_com_median:.0f} μm, Max ΔV: {max_v-np.abs(np.nanmin(resp_matrix)):.0f} mV',
              transform=plt.gca().transAxes, ha='center', fontsize=10)
     plt.axis('off')
     
@@ -409,11 +409,11 @@ def main():
     
     # Plot 2: RF size
     fig, ax = plt.subplots(figsize=(10, 8))
-    hb = plot_hexbin(size_image.T, vmin=100, vmax=800, title='RF Size', ax=ax)
+    hb = plot_hexbin(size_image.T, vmin=100, vmax=700, title='RF Size', ax=ax)
     plt.colorbar(hb, ax=ax, label='RF Size (μm)')
     plt.title(f'Receptive Field Size - Cell {CELL_ID}')
     plt.text(0.5, 0.01,
-             f'Proximal Size: {prox_size_median:.0f} μm, Distal Size: {dist_size_median:.0f} μm, Max ΔV: {max_v-55:.0f} mV',
+             f'Proximal Size: {prox_size_median:.0f} μm, Distal Size: {dist_size_median:.0f} μm, Max ΔV: {max_v-np.abs(np.nanmin(resp_matrix)):.0f} mV',
              transform=plt.gca().transAxes, ha='center', fontsize=10)
     plt.axis('off')
     
@@ -430,7 +430,7 @@ def main():
         dist_size_median=dist_size_median,
         prox_com_median=prox_com_median,
         dist_com_median=dist_com_median,
-        max_v=max_v - 55,
+        max_v=max_v - np.abs(np.nanmin(resp_matrix)),
         com_image=com_image,
         size_image=size_image,
         g_pas_value=G_PAS,
@@ -452,7 +452,7 @@ def main():
     print(f"  Parameters:               g_pas={G_PAS}, Nav={NAV_DENSITY}, weight={WEIGHT}")
     print(f"  Proximal RF size (μm):    {prox_size_median:.0f}")
     print(f"  Distal RF size (μm):      {dist_size_median:.0f}")
-    print(f"  Max voltage response (mV): {max_v-55:.1f}")
+    print(f"  Max voltage response (mV): {max_v-np.abs(np.nanmin(resp_matrix)):.1f}")
 
 
 if __name__ == '__main__':

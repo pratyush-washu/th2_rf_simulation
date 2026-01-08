@@ -37,11 +37,12 @@ Parameters were tuned via grid search to match physiological length constants ($
 | Parameter | Value | Description |
 | :--- | :--- | :--- |
 | **$C_m$** | 1.0 $\mu F/cm^2$ | Membrane capacitance |
-| **$g_{leak}$** | 0.36 $mS/cm^2$ | Passive leak conductance |
-| **$g_{Na}$** | 0.16 $mS/cm^2$ | Voltage-gated $Na^+$ conductance density |
+| **$R_a$** | 60 \Omega \text{cm} | Axial Resistance |
+| **$g_{leak}$** | 1.2 $mS/cm^2$ | Passive leak conductance |
+| **$g_{Na}$** | 1.9 $mS/cm^2$ | Voltage-gated $Na^+$ conductance density |
 | **$E_{leak}$** | -55 mV | Leak reversal potential |
 | **$E_{Na}$** | 50 mV | Sodium reversal potential |
-| **$\lambda$** | 475 µm | Effective electrotonic length constant |
+| **$\lambda$** | 460 µm | Effective electrotonic length constant |
 | **Synapse Density** | 0.064 syn/µm | Excitatory OFF bipolar input density |
 
 ## Requirements

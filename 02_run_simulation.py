@@ -44,9 +44,9 @@ CELL_ID = 11
 SWC_FILENAME = f'cell_{CELL_ID}_updated_soma.swc'
 
 # Model parameters (from your optimization)
-G_PAS = 0.36        # Passive leak conductance (S/cm²)
-NAV_DENSITY = 0.16  # Sodium channel density (S/cm²)
-WEIGHT = 0.27       # Synaptic weight scaling factor
+G_PAS = 0.0012        # Passive leak conductance (S/cm²)
+NAV_DENSITY =  0.0019  # Sodium channel density (S/cm²)
+WEIGHT = 0.0003 # Synaptic weight scaling factor
 
 # Output configuration
 SIMULATION_INDEX = 1  # Index for output file naming
