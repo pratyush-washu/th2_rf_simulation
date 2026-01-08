@@ -11,6 +11,12 @@ The model uses morphological reconstructions from 3DEM data and biophysical cons
 * **Synaptic Input:** Uniform distribution of excitatory synapses (0.064 syn/µm) mimicking OFF bipolar cell innervation.
 * **Receptive Field Mapping:** Grid-based visual stimulation to calculate RF size and center-of-mass (COM) offsets across the dendritic arbor.
 
+<p align="center">
+  <img src="figures/schematic.png" width="600" alt="Receptive Field Mapping">
+  <br>
+  <em>Figure 1: Simulated receptive field map showing proximal vs. distal dendritic integration.</em>
+</p>
+
 ## Simulation Pipeline
 
 The workflow consists of three sequential steps:
