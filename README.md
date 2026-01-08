@@ -27,7 +27,7 @@ The workflow consists of three sequential steps:
 
 ### 3. Analysis
 * **Script:** `03_analyze_receptive_field.py`
-* **Function:** Reconstructs RFs from voltage responses. Calculates RF size (major axis at 25% threshold) and spatial offset (distance from recording site to RF COM). Compares proximal (<80 µm) vs. distal dendritic integration.
+* **Function:** Reconstructs RFs from voltage responses. Calculates RF size (major axis at 25% threshold) and spatial offset (distance from recording site to RF COM). Compares proximal (<76.1 µm) vs. distal dendritic integration.
 * **Output:** Hexbin plots and summary statistics in `figures/`.
 
 ## Model Parameters
