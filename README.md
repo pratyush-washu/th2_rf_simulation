@@ -37,7 +37,7 @@ Parameters were tuned via grid search to match physiological length constants ($
 | Parameter | Value | Description |
 | :--- | :--- | :--- |
 | **$C_m$** | 1.0 $\mu F/cm^2$ | Membrane capacitance |
-| **$R_a$** | 60 $\Omega cm$ | Axial Resistance |
+| **$R_a$** | 60 $\Omega \cdot cm$ | Axial Resistance |
 | **$g_{leak}$** | 1.2 $mS/cm^2$ | Passive leak conductance |
 | **$g_{Na}$** | 1.9 $mS/cm^2$ | Voltage-gated $Na^+$ conductance density |
 | **$E_{leak}$** | -55 mV | Leak reversal potential |
