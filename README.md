@@ -14,7 +14,7 @@ The model uses morphological reconstructions from 3DEM data and biophysical cons
 <p align="center">
   <img src="figures/schematic.png" width="600" alt="Receptive Field Mapping">
   <br>
-  <em>Figure 1: Simulated receptive field map showing proximal vs. distal dendritic integration.</em>
+  <em>Figure: Simulated receptive field map showing proximal vs. distal dendritic integration.</em>
 </p>
 
 ## Simulation Pipeline
